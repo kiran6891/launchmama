@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container">
+    <h3 class="headline m-top-md">
+        Payment Successful
+        <span class="line"></span>
+    </h3>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Please note down the API mentioned and use it in your app. Best of luck !!</h4>
+        </div>
+        <div class="panel-body">
+            <h3>{{ user_api_details.api_key }}</h3>
+        </div>
+    </div>
+
+    <a href="{% url 'home' %}" class="btn btn-primary">Go Home</a>
+
+</div>
+
+{% endblock %}

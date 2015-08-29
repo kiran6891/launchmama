@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <!--<div class="main-header clearfix">-->
+            <!--<div class="page-title">-->
+                <!--<h3 class="no-margin">Dashboard</h3>-->
+                <!--<span>Welcome back, {{ request.user.first_name }}</span>-->
+            <!--</div>&lt;!&ndash; /page-title &ndash;&gt;-->
+
+            <!--<ul class="page-stats">-->
+                <!--<li>-->
+                    <!--<div class="value">-->
+                        <!--<span>Number of installs</span>-->
+                        <!--<h4 id="currentVisitor">56</h4>-->
+                    <!--</div>-->
+                    <!--<span id="visits" class="sparkline"><canvas width="79" height="35" style="display: inline-block; width: 79px; height: 35px; vertical-align: top;"></canvas></span>-->
+                <!--</li>-->
+            <!--</ul>&lt;!&ndash; /page-stats &ndash;&gt;-->
+        <!--</div>-->
+        <div class="container">
+
+            <h3 class="headline m-top-md">
+                Offer
+                <span class="line"></span>
+            </h3>
+
+            <div class="panel panel-default table-responsive">
+                <div class="panel-heading">
+                    <div class="page-title">
+                        <h3 class="no-margin">Welcome back, {{ request.user.first_name }}</h3>
+                        <!--<span>Welcome back, {{ request.user.first_name }}</span>-->
+                    </div><!-- /page-title -->
+                </div>
+                <div class="panel-body">
+
+                    <p style="font-size: 14px;">Select offers</p>
+
+                    <table class="table table-striped" id="responsiveTable">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                </th>
+                                <th>Offer</th>
+                                <th>Units</th>
+                                <th>Total cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for offer in offer_list %}
+                                <tr>
+                                    <td>
+                                        <label class="label-checkbox">
+                                            <input type="checkbox" class="chk-row" id="{{ offer.id }}" data-total-cost="{{ offer.total_cost }}">
+                                            <span class="custom-checkbox"></span>
+                                        </label>
+                                    </td>
+                                    <td>{{ offer.name }}</td>
+                                    <td>{{ offer.free_units }}</td>
+                                    <td>{{ offer.total_cost }}</td>
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    <div style="font-size: 20px; padding-left: 20px;">
+                        <p>Total amount: <span id="total_amount">0</span></p>
+                    </div>
+
+                    <button class="btn btn-success" style="margin-left: 20px;" id="make_payment" >Make Payment</button>
+
+                </div>
+
+
+
+            </div>
+        </div>
+
+    {% block extra_js %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#make_payment").on("click", function(e) {
+                    $(this).html("Processing...");
+                    dataparams = {};
+                    dataparams["csrfmiddlewaretoken"] = "{{ csrf_token }}";
+                    dataparams["total_amount"] = $("#total_amount").html();
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'make_payment' %}",
+                        async:false,
+                        data:dataparams ,
+                        dataType: "json",
+                        cache: false,
+                        success: function (data) {
+                            var payment_success_url = "{% url 'payment_success' 12345 %}";
+                            payment_success_url = payment_success_url.replace(/12345/, data);
+                            location.href = payment_success_url;
+                        },
+                        error: function (jqXHR, exception) {
+                            console.log(exception);
+                        }
+                    });
+                });
+
+                $(".chk-row").on("change", function(event) {
+                    var total_amount = 0;
+                    $('.chk-row').each(function() {
+                        if($(this).is(":checked")) {
+                            // console.log($(this).attr("data-total-cost"));
+                            total_amount = parseInt(total_amount)  + parseInt($(this).attr("data-total-cost"));
+                        }
+                        $("#total_amount").html(total_amount);
+                    });
+                });
+            });
+        </script>
+    {% endblock %}
+
+
+{% endblock %}
+

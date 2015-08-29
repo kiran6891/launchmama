@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.contrib.auth.views import login
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect, HttpResponse
@@ -6,11 +6,18 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from lm.models import Offer
-from lm.models import UserApiDetails
+from lm.models import UserApiDetails, ApiOfferDetails
 import uuid
 import json
 
 __author__ = 'kiran'
+
+
+def index(request):
+    if request.user.is_anonymous():
+        return HttpResponseRedirect(reverse("do_login"))
+    else:
+        return HttpResponseRedirect(reverse("home"))
 
 
 def do_login(request):
@@ -45,14 +52,20 @@ def make_payment(request):
     total_amount = request.POST["total_amount"]
     total_amount = int(total_amount)
     api_key = uuid.uuid1()
-    print api_key
     user_api_details = UserApiDetails.objects.create(
         user=request.user,
         api_key=api_key,
         total_amount_paid=total_amount
     )
     user_api_details.save()
-    print user_api_details
+
+    # save in api offer details
+    str_offer_id = request.POST["str_offer_id"]
+    offer_list = str_offer_id.split(",")
+    for offer_id in offer_list:
+        offer = Offer.objects.get(id=offer_id)
+        ApiOfferDetails.objects.create(api_key=api_key, offer=offer, remaining_units=offer.free_units)
+
     return HttpResponse(user_api_details.id)
 
 
@@ -66,3 +79,8 @@ def payment_success(request, user_api_id):
         context,
         RequestContext(request)
     )
+
+
+def do_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("index"))

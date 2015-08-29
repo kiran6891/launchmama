@@ -52,7 +52,8 @@
                                 <tr>
                                     <td>
                                         <label class="label-checkbox">
-                                            <input type="checkbox" class="chk-row" id="{{ offer.id }}" data-total-cost="{{ offer.total_cost }}">
+                                            <input type="checkbox" class="chk-row" id="{{ offer.id }}" data-total-cost="{{ offer.total_cost }}"
+                                                    data-offer-id="{{ offer.id }}">
                                             <span class="custom-checkbox"></span>
                                         </label>
                                     </td>
@@ -83,9 +84,24 @@
             $(document).ready(function(){
                 $("#make_payment").on("click", function(e) {
                     $(this).html("Processing...");
+                    var str_offer_id = "";
+
+                    $('.chk-row').each(function() {
+                        if($(this).is(":checked")) {
+                            console.log("Selected");
+                            if(str_offer_id == "") {
+                                str_offer_id = $(this).attr("data-offer-id");
+                            }
+                            else {
+                                str_offer_id = str_offer_id + "," + $(this).attr("data-offer-id");
+                            }
+                        }
+                    });
+
                     dataparams = {};
                     dataparams["csrfmiddlewaretoken"] = "{{ csrf_token }}";
                     dataparams["total_amount"] = $("#total_amount").html();
+                    dataparams["str_offer_id"] = str_offer_id;
                     $.ajax({
                         type: "POST",
                         url: "{% url 'make_payment' %}",

@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^home', "views.home", name="home"),
     url(r'^make-payment', "views.make_payment", name="make_payment"),
     url(r'^payment-success/(?P<user_api_id>\d+)$', "views.payment_success", name="payment_success"),
-    # url(r"^api/", include("api.urls")),
+    url(r"^api/", include("api.urls")),
 ]
 

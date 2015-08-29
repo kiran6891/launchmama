@@ -11,6 +11,7 @@ class Offer(models.Model):
     description = models.TextField(blank=True, null=True)
     free_units = models.IntegerField()  # free drinks available Eg: 100 free drinks at Brewsky
     total_cost = models.IntegerField()  # Total cost Eg: 100 units * Rs. 300 = Rs. 3000
+    is_custom_offer = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name

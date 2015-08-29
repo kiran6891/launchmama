@@ -30,3 +30,10 @@ urlpatterns = [
     url(r'^logout$', "views.do_logout", name="do_logout"),
 ]
 
+if settings.DEBUG:
+    urlpatterns += patterns('',
+                            (r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:],
+                             'django.views.static.serve',
+                             {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}), )
+    urlpatterns += staticfiles_urlpatterns()
+

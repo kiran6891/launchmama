@@ -21,7 +21,7 @@
         <div class="container">
 
             <h3 class="headline m-top-md">
-                Offer
+                LaunchMama
                 <span class="line"></span>
             </h3>
 
@@ -34,7 +34,7 @@
                 </div>
                 <div class="panel-body">
 
-                    <p style="font-size: 14px;">Select offers</p>
+                    <p style="font-size: 14px;">We are tied up with the following venues. Choose your favorite ones !!   </p>
 
                     <table class="table table-striped" id="responsiveTable">
                         <thead>
@@ -66,6 +66,15 @@
                         </tbody>
                     </table>
 
+                    <p style="font-size: 16px;">Not interested with any of the above offers??</p>
+
+                    <label class="label-checkbox" style="font-size: 14px;">
+                        <input type="checkbox" id="custom_offer">
+                        <span class="custom-checkbox"></span>
+                        Never mind. Select this option to arrange your custom swags by paying Rs. 1000 only.
+                    </label>
+                    <br>
+
                     <div style="font-size: 20px; padding-left: 20px;">
                         <p>Total amount: <span id="total_amount">0</span></p>
                     </div>
@@ -82,9 +91,9 @@
     {% block extra_js %}
         <script type="text/javascript">
             $(document).ready(function(){
+                var str_offer_id = "";
                 $("#make_payment").on("click", function(e) {
                     $(this).html("Processing...");
-                    var str_offer_id = "";
 
                     $('.chk-row').each(function() {
                         if($(this).is(":checked")) {
@@ -130,6 +139,12 @@
                         $("#total_amount").html(total_amount);
                     });
                 });
+
+                $("#custom_offer").on("click", function(event) {
+                    str_offer_id = "-1";
+                    $("#total_amount").html("1000");
+                });
+
             });
         </script>
     {% endblock %}

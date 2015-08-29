@@ -2,6 +2,32 @@
 
 {% block body %}
 
+    <div id="top-nav" class="skin-6 fixed" style="background-color: #323447;">
+			<a href="{% url 'index' %}">
+                <div class="brand">
+                    <span>LaunchMama</span>
+                </div><!-- /brand -->
+            </a>
+			<button type="button" class="navbar-toggle pull-left" id="sidebarToggle">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<ul class="nav-notification clearfix">
+				<li class="profile dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+						<strong>{{ request.user.first_name }}&nbsp;{{ request.user.last_name }}</strong>
+						<span><i class="fa fa-chevron-down"></i></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a tabindex="-1" class="main-link logoutConfirm_open" href="{% url 'do_logout' %}" ><i class="fa fa-lock fa-lg"></i> Log out</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+        <br>
+        <br>
     <!--<div class="main-header clearfix">-->
             <!--<div class="page-title">-->
                 <!--<h3 class="no-margin">Dashboard</h3>-->
@@ -18,12 +44,7 @@
                 <!--</li>-->
             <!--</ul>&lt;!&ndash; /page-stats &ndash;&gt;-->
         <!--</div>-->
-        <div class="container">
-
-            <h3 class="headline m-top-md">
-                Offer
-                <span class="line"></span>
-            </h3>
+        <div class="container" style="margin-top: 30px;">
 
             <div class="panel panel-default table-responsive">
                 <div class="panel-heading">
@@ -34,7 +55,7 @@
                 </div>
                 <div class="panel-body">
 
-                    <p style="font-size: 14px;">Select offers</p>
+                    <p style="font-size: 14px;">We are tied up with the following venues. Choose your favorite ones !!   </p>
 
                     <table class="table table-striped" id="responsiveTable">
                         <thead>
@@ -66,6 +87,15 @@
                         </tbody>
                     </table>
 
+                    <p style="font-size: 16px;">Not interested with any of the above offers??</p>
+
+                    <label class="label-checkbox" style="font-size: 14px;">
+                        <input type="checkbox" id="custom_offer">
+                        <span class="custom-checkbox"></span>
+                        Never mind. Select this option to arrange your custom swags by paying Rs. 1000 only.
+                    </label>
+                    <br>
+
                     <div style="font-size: 20px; padding-left: 20px;">
                         <p>Total amount: <span id="total_amount">0</span></p>
                     </div>
@@ -82,9 +112,9 @@
     {% block extra_js %}
         <script type="text/javascript">
             $(document).ready(function(){
+                var str_offer_id = "";
                 $("#make_payment").on("click", function(e) {
                     $(this).html("Processing...");
-                    var str_offer_id = "";
 
                     $('.chk-row').each(function() {
                         if($(this).is(":checked")) {
@@ -130,6 +160,12 @@
                         $("#total_amount").html(total_amount);
                     });
                 });
+
+                $("#custom_offer").on("click", function(event) {
+                    str_offer_id = "-1";
+                    $("#total_amount").html("1000");
+                });
+
             });
         </script>
     {% endblock %}

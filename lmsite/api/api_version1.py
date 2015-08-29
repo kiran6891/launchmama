@@ -31,9 +31,12 @@ class ApiVersion1():
 
             # save in QRDetails
             try:
-                QRDetails.objects.get(device_id=device_id, api_key=api_key)
-                response_obj['status'] = "400"
-                response_obj['message'] = "QR ALREADY EXISTS"
+                qr = QRDetails.objects.get(device_id=device_id, api_key=api_key)
+                response_obj['status'] = "200"
+                response_obj['message'] = "SUCCESS"
+                response_obj['offer_name'] = qr.offer.name
+                response_obj['qr_image_url'] = qr.image_url
+                response_obj['qr_id'] = qr.id
             except QRDetails.DoesNotExist:
 
                 # select a random offer

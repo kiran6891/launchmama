@@ -82,5 +82,6 @@ def payment_success(request, user_api_id):
 
 
 def do_logout(request):
+    print "Logout"
     logout(request)
     return HttpResponseRedirect(reverse("index"))

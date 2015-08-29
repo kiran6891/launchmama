@@ -50,6 +50,7 @@ class ApiVersion1():
                     response_obj['status'] = "200"
                     response_obj['message'] = "SUCCESS"
                     response_obj['offer_name'] = api_offer.offer.name
+                    response_obj['offer_description'] = api_offer.offer.description
                     response_obj['qr_image_url'] = image_url
                     response_obj['qr_id'] = qr.id
                     api_offer.remaining_units -= 1

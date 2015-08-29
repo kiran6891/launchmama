@@ -8,7 +8,7 @@ class Offer(models.Model):
     # via launchmama
 
     name = models.CharField(max_length=255)  # name of the offer
-
+    description = models.TextField(blank=True, null=True)
     free_units = models.IntegerField()  # free drinks available Eg: 100 free drinks at Brewsky
     total_cost = models.IntegerField()  # Total cost Eg: 100 units * Rs. 300 = Rs. 3000
 

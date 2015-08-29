@@ -22,8 +22,8 @@ import settings
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login$', "views.do_login", name="do_login"),
-    url(r'^home', "views.home", name="home"),
-    url(r'^make-payment', "views.make_payment", name="make_payment"),
+    url(r'^home$', "views.home", name="home"),
+    url(r'^make-payment$', "views.make_payment", name="make_payment"),
     url(r'^payment-success/(?P<user_api_id>\d+)$', "views.payment_success", name="payment_success"),
     url(r"^api/", include("api.urls")),
     url(r'$', "views.index", name="index"),

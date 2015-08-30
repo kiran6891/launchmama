@@ -36,4 +36,3 @@ if settings.DEBUG:
                              'django.views.static.serve',
                              {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}), )
     urlpatterns += staticfiles_urlpatterns()
-

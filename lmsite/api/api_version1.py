@@ -14,10 +14,8 @@ class ApiVersion1():
     @staticmethod
     def get_qr_details(request, device_type):
         try:
-            params = request.POST.get("params",None)
-            args = json.loads(params)
-            device_id = args["device_id"]
-            api_key = args["api_key"]
+            device_id = request.GET.get("device_id",None)
+            api_key = request.GET.get("api_key",None)
 
             # device_id = 123
             # api_key = 123
@@ -26,16 +24,19 @@ class ApiVersion1():
 
             # generate qr guid and qr image url
             qr_guid = uuid.uuid1()
-            big_code = pyqrcode.create(qr_guid, error='L', version=27, mode='binary')
+            big_code = pyqrcode.create(qr_guid, error='L', version=3, mode='binary')
             image_url = u"{0}qr/{1}.png".format("site_media/media/", qr_guid)
             print image_url
-            big_code.png(image_url, scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xcc])
+            big_code.png(image_url, scale=6, module_color=[0, 0, 0, 128], background=[0xff, 0xff, 0xff])
 
             # save in QRDetails
             try:
-                QRDetails.objects.get(device_id=device_id, api_key=api_key)
-                response_obj['status'] = "400"
-                response_obj['message'] = "QR ALREADY EXISTS"
+                qr = QRDetails.objects.get(device_id=device_id, api_key=api_key)
+                response_obj['status'] = "200"
+                response_obj['message'] = "SUCCESS"
+                response_obj['offer_name'] = qr.offer.name
+                response_obj['qr_image_url'] = qr.image_url
+                response_obj['qr_id'] = qr.id
             except QRDetails.DoesNotExist:
 
                 # select a random offer
@@ -70,10 +71,7 @@ class ApiVersion1():
     @staticmethod
     def verify_qr_code(request, device_type):
         try:
-            params = request.POST.get("params",None)
-            args = json.loads(params)
-            qr_id = args["qr_guid"]
-            # qr_id = 6
+            qr_id = request.GET.get("qr_id",None)
             response_obj = {}
             try:
                 qr = QRDetails.objects.get(qr_guid=qr_id)

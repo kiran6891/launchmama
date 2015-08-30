@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>55D33EE8-206D-4D2C-83A9-A8DBFB5133A5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>LaunchMama</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>F4AE80A61925E92205489CA6141EA3BC4621A374</key>
+		<string>github.com:kiran6891/launchmama.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>LaunchMama/LaunchMama.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>F4AE80A61925E92205489CA6141EA3BC4621A374</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:kiran6891/launchmama.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>F4AE80A61925E92205489CA6141EA3BC4621A374</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>F4AE80A61925E92205489CA6141EA3BC4621A374</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LM</string>
+		</dict>
+	</array>
+</dict>
+</plist>

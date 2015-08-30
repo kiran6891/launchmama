@@ -35,6 +35,7 @@ class ApiVersion1():
                 response_obj['status'] = "200"
                 response_obj['message'] = "SUCCESS"
                 response_obj['offer_name'] = qr.offer.name
+                response_obj['offer_description'] = qr.offer.description
                 response_obj['qr_image_url'] = qr.image_url
                 response_obj['qr_id'] = qr.id
             except QRDetails.DoesNotExist:
@@ -62,6 +63,10 @@ class ApiVersion1():
 
         except Exception as e:
             print e
+            response_obj = {}
+            response_obj['status'] = "400"
+            response_obj['message'] = e
+            return HttpResponse(content_type="application/json", content=json.dumps(response_obj))
 
 
     @staticmethod
@@ -78,6 +83,7 @@ class ApiVersion1():
                     response_obj['status'] = "200"
                     response_obj['message'] = "SUCCESS"
                     response_obj['offer_name'] = qr.offer.name
+                    response_obj['offer_description'] = qr.offer.description
                     qr.is_used = True
                     qr.save()
 

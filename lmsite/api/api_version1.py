@@ -64,7 +64,7 @@ class ApiVersion1():
             print e
             response_obj = {}
             response_obj['status'] = "400"
-            response_obj['message'] = e.message
+            response_obj['message'] = e
             return HttpResponse(content_type="application/json", content=json.dumps(response_obj))
 
 

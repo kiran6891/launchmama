@@ -83,6 +83,7 @@ class ApiVersion1():
                     response_obj['status'] = "200"
                     response_obj['message'] = "SUCCESS"
                     response_obj['offer_name'] = qr.offer.name
+                    response_obj['offer_description'] = qr.offer.description
                     qr.is_used = True
                     qr.save()
 
